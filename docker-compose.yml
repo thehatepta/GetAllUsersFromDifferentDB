@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  postgres1:
+    image: postgres:latest
+    container_name: postgres1-container
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_DB: testdb
+    ports:
+      - "5434:5434"
+    volumes:
+      - postgres_data1:/var/lib/postgresql/data
+
+  postgres2:
+    image: postgres:latest
+    container_name: postgres2-container
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_DB: testdb
+    ports:
+      - "5433:5433"
+    volumes:
+      - postgres_data2:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres1
+      - postgres2
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data1:
+  postgres_data2:
