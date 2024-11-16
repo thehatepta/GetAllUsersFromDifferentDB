@@ -26,7 +26,9 @@ public class UsersController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> getAllUsers() {
+        logger.info("Request to get all users received");
         List<User> users = usersService.findAllUsers();
+        logger.info("Returning {} users", users.size());
         return ResponseEntity.ok(users);
     }
 }
